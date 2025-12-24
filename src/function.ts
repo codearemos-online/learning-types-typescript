@@ -57,3 +57,21 @@ const printNameAndOptionsOpc = (name:string,options?:Options) => {
 printNameAndOptions('Testing name')
 printNameAndOptionsOpc('Testing name opc', {debugMode:false})
 
+/**
+ *
+ * OPTIONAL PARAMETERS
+ * 
+*/
+
+type OptionDesc = {
+    debugMode:boolean,
+    printErrors:boolean
+}
+
+const printOptionsDestructured = (name:string,{debugMode}:OptionDesc) => {
+    console.log(name,debugMode)
+}
+
+printOptionsDestructured("John",{debugMode:false,printErrors:true})
+
+
