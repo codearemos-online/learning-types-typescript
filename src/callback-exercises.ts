@@ -123,21 +123,21 @@ divide(
 */
 
 type UserValidate = {
-    name?:string,
-    age?:number
+    name?: string,
+    age?: number
 }
 
 const createUser = (
-    user:UserValidate,
-    onSuccess:(user:UserValidate) => void,
-    onError:(message:string) => void
+    user: UserValidate,
+    onSuccess: (user: UserValidate) => void,
+    onError: (message: string) => void
 ) => {
-    if(user.name == null){
+    if (user.name == null) {
         onError("El nombre es obligatorio");
         return;
     }
 
-    if(user.age == null){
+    if (user.age == null) {
         onError("La edad es obligatoria");
         return;
     }
@@ -145,8 +145,8 @@ const createUser = (
     onSuccess(user);
 }
 
-let newUser:UserValidate = {
-    name:'John',
+let newUser: UserValidate = {
+    name: 'John',
     age: 9
 }
 
@@ -155,7 +155,109 @@ createUser(
     (user) => {
         console.log(user)
     },
-    (message:string) => {
+    (message: string) => {
         console.log(message)
     }
 )
+
+/**
+ * 
+ * Exercise 6: saving a user
+ * 
+*/
+
+type UserInput = {
+    username?: string,
+    age?: number
+}
+
+type UserValidated = {
+    username: string,
+    age: number
+}
+
+type User = {
+    id: string,
+    username: string,
+    age: number
+}
+
+function validateUser(
+    input: UserInput,
+    onSuccess: (validated: { username: string, age: number }) => void,
+    onError: (message: string) => void
+) {
+    if (input.username === undefined) {
+        onError("El username es obligatorio");
+        return;
+    }
+
+    if (input.age === undefined) {
+        onError("La edad es obligatoria");
+        return;
+    }
+
+    if (input.age && input.age < 18) {
+        onError("Es menor de edad");
+        return;
+    }
+
+    const validatedUser: UserValidated = {
+        username: input!.username,
+        age: input!.age
+    }
+
+    onSuccess(validatedUser)
+}
+
+function createUserEntity(
+    data: UserValidated,
+    onSuccess: (user: User) => void
+) {
+    const user: User = {
+        id: 'id-01',
+        username: data.username,
+        age: data.age
+    }
+    onSuccess(user);
+}
+
+function saveUser(
+    user: User,
+    onSuccess: (saved: User) => void
+) {
+    onSuccess(user)
+}
+
+function registerUser(
+    input: UserInput,
+    onSuccess: (user: User) => void,
+    onError: (message: string) => void
+) {
+    validateUser(
+        input,
+        (validated) => {
+            createUserEntity(
+                validated,
+                (user) => {
+                    saveUser(user, (saved) => {
+                        onSuccess(saved)
+                    })
+                }
+            )
+        },
+        (error) => {
+            onError(error)
+        }
+    )
+}
+
+registerUser(
+    { username: "Diego", age: 25 },
+    (user) => {
+        console.log("Usuario registrado:", user);
+    },
+    (error) => {
+        console.log("Error:", error);
+    }
+);
