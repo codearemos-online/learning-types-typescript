@@ -75,3 +75,17 @@ const printOptionsDestructured = (name:string,{debugMode}:OptionDesc) => {
 printOptionsDestructured("John",{debugMode:false,printErrors:true})
 
 
+/**
+ *
+ * OPTIONAL PARAMETERS
+ * 
+*/
+
+const printNumbers = (...nums:number[]) => {
+    const num  = nums.reduce((num,num1) => num + num1)
+    console.log(num)
+}
+
+printNumbers(1,2,3,4)
+
+
