@@ -1,3 +1,9 @@
+/**
+ *
+ * APPLY TYPES IN FUNCTIONS  
+ * 
+*/
+
 type Person = {
     name:string,
     age?:number
@@ -8,7 +14,7 @@ const getName = (person: Person) => {
 }
 
 const registerPerson: Person = {
-    name:"diego"
+    name:"John"
 }
 
 const newPerson = getName(registerPerson);
