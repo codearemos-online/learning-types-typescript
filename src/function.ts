@@ -20,3 +20,16 @@ const registerPerson: Person = {
 const newPerson = getName(registerPerson);
 
 console.log(newPerson)
+
+
+/**
+ *
+ * APPLY VOID TYPES
+ * 
+*/
+
+function printName(name:string):void{
+    console.log(name)
+} 
+
+let namePerson = printName("Doe")
